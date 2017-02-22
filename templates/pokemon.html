@@ -1,0 +1,47 @@
+{% extends "main.html" %}
+
+{% block content %}
+<main>
+    <div class="page-content">
+    <div class="row divider blue">
+        <div class="col-md-12"></div>
+    </div>
+    <div class="row banner main">
+        <div class="col-md-1"></div>
+        <div class="col-md-11 padding-none">
+            <h1>Pokemons Trainer {{trainers.name}} has</h1>
+        </div>
+    </div>
+
+    <div class="row padding-top padding-bottom">
+        <div class="col-md-1"></div>
+        <div class="col-md-10 padding-none">
+
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+        <div class="row">
+            <div class="col-md-1"></div>
+                <div class="col-md-10 trainee-list">
+                    <table class="table table-striped" style="border: 1px solid black;">
+                        <thead style="width:100%;">
+                          <tr style="background-color: black; color: white;">
+                            <th>Pokemons</th>
+                            <th>Delete Pokemon</th>
+                          </tr>
+                        </thead>
+                            <tbody style="border: 1px solid black;">
+                                {% for poke in pokemons %}
+                                    <tr>
+                                        <td>{{poke.name}}</td>
+                                        <td><a href="{{url_for('deletePokemonUser',user_id=trainers.id, pokemon_id = poke.id)}}">Delete</a></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                    </table>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

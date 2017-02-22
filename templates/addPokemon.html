@@ -1,0 +1,45 @@
+{% extends "main.html" %}
+{% block content %}
+    <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+            <div class="mdl-layout-spacer"></div>
+            {%if 'username' not in session %}
+            <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" href="{{url_for('login')}}">
+              Login
+            </a>
+
+            {% else %}
+            <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" href="{{url_for('logout')}}">
+              Logout
+            </a>
+            {% endif %}
+        </div>
+        <div class="col-md-2 text-left">
+            <a href="{{ url_for('showTrainers')}}">Back</a>
+        </div>
+    </header>
+    <div class="row divider blue">
+        <div class="col-md-12"></div>
+    </div>
+    <div class="row banner main">
+        <div class="col-md-1"></div>
+        <div class="col-md-11 padding-none">
+            <h1>Add Pokemon</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-1 padding-top" style="border: 1px solid black">
+            <form action="{{ url_for('addPokemon')}}" method = "post">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type ="text" maxlength="100" class="form-control" name="name">
+                </br>
+                <div class="padding-bottom"></div>
+                <button type="submit" class="btn btn-default" id="submit" type="submit">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

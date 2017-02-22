@@ -1,0 +1,108 @@
+{% extends "main.html" %}
+{% block content %}
+    <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+            <div class="mdl-layout-spacer"></div>
+            {%if 'username' not in session %}
+            <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" href="{{url_for('login')}}">
+              Login
+            </a>
+
+            {% else %}
+            <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" href="{{url_for('logout')}}">
+              Logout
+            </a>
+            {% endif %}
+        </div>
+    </header>
+    <main>
+        <div class="page-content">
+            <div class="row divider blue">
+                <div class="col-md-12"></div>
+            </div>
+            <div class="row banner main">
+                <div class="col-md-1"></div>
+                <div class="col-md-11 padding-none">
+                    <h1>Trainers</h1>
+                </div>
+            </div>
+
+            <div class = 'alert alert-warning flash'>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+
+                        <ul>
+                        {% for message in messages %}
+                            <li> <strong> {{ message }} </strong> </li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endwith %}
+            </div>
+        <div class="row padding-top padding-bottom">
+            <div class="col-md-1"></div>
+            <div class="col-md-10 padding-none">
+
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-1"></div>
+                <div class="col-md-10 trainee-list">
+                    <table class="table table-striped" style="border: 1px solid black;">
+                        <thead style="width:100%;">
+                          <tr style="background-color: black; color: white;">
+                            <th>Name of trainer</th>
+                            <th>E-mail</th>
+                            <th>Hometown</th>
+                            <th>Edit Profile</th>
+                            <th>Add Pokemon</th>
+                          </tr>
+                        </thead>
+                            <tbody style="border: 1px solid black;">
+                                {% for trainee in trainers %}
+
+                                        <tr  onclick="window.location='{{url_for('pokemonDetails', user_id = trainee.id)}}';" style='cursor: pointer;'>
+                                            <td>{{trainee.name}}</td>
+                                            <td>{{trainee.email}}</td>
+                                            <td>{{trainee.hometown}}</td>
+                                            <td><a href="{{url_for('editProfile', user_id = trainee.id)}}"> Edit </a></td>
+                                            <td><a href="{{url_for('addPokemonUser', user_id = trainee.id)}}">Add Pokemon</a></td>
+                                        </tr>
+
+                                {% endfor %}
+                            </tbody>
+                    </table>
+                </div>
+            <div class="row divider blue">
+                <div class="col-md-12"></div>
+            </div>
+            {%if 'username' in session %}
+                <div class="row banner main">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-11 padding-none">
+                        <h1>Add/Delete Pokemon to/from Database</h1>
+                    </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+                <div class="row padding-top padding-bottom">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-11 padding-none">
+                        <button class="btn btn-default" id="new-menu-item">
+                            <a href="{{url_for('addPokemon', user_id = trainers.id)}}">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add Pokemon
+                            </a>
+                        </button>
+                        <button class="btn btn-default" id="new-menu-item">
+                            <a href="{{url_for('deletePokemon')}}">
+                                <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>Delete Pokemon
+                            </a>
+                        </button>
+                    </div>
+                    <div class="col-md-7"></div>
+                </div>
+            {% endif %}
+        </div>
+    </main>
+{% endblock %}
